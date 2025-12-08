@@ -30,7 +30,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class AnimGLEventListener2 implements GLEventListener, KeyListener, MouseListener {
+public class AnimGLEventListener2 implements GLEventListener, KeyListener, MouseListener , MouseMotionListener {
 
     TextRenderer t = new TextRenderer(Font.decode("SansSerif"));
     final String assetsFolderName = "Texture";
@@ -192,5 +192,21 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+     @Override
+    public void mouseMoved(MouseEvent e) {
+        Component c = e.getComponent();
+        double width = c.getWidth();
+        double height = c.getHeight();
+
+        
+        xPosition = (int)((e.getX() / width) * maxWidth);      
+        yPosition = (int)(((height - e.getY()) / height) * maxHeight); 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        mouseMoved(e);
     }
 }

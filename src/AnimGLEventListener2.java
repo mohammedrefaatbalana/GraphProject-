@@ -138,11 +138,55 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             }
         }
     }
+    int eggshanded = 1;
+    int level = 1;
+    int oldscore = 0;
+    int lifes = 3;
+    boolean gameover = false;
+    boolean pause = false;
+    boolean h = false;
+    boolean firstone = true;
+    boolean startgame = false;
+    boolean helppic = false;
+    boolean startagain = false;
+    int Chickenindex =10;
+    int highscore = 0;
+    boolean askName = false;
+    String playerName = "";
+    boolean nameEntered = false;
 
     @Override
     public void display(GLAutoDrawable glAutoDrawable) {
 
     }
+    public void chooseControl(GL gl) {
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        gl.glLoadIdentity();
+
+        t.beginRendering(400, 400);
+        t.setColor(Color.BLACK);
+        t.draw("Choose Control Mode", 80, 300);
+        t.draw("Press K for Keyboard", 100, 240);
+        t.draw("Press M for Mouse", 100, 200);
+        t.endRendering();
+
+        // choose keyboard
+        if (isKeyPressed(KeyEvent.VK_K)) {
+            useKeyboard = true;
+            useMouse = false;
+            startgame = true;
+            chooseControl = false;
+        }
+
+        // chosse mouse
+        if (isKeyPressed(KeyEvent.VK_M)) {
+            useMouse = true;
+            useKeyboard = false;
+            startgame = true;
+            chooseControl = false;
+        }
+    }
+
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
@@ -158,15 +202,21 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void keyTyped(KeyEvent e) {
 
     }
+    public BitSet keyBits = new BitSet(256);
 
     @Override
-    public void keyPressed(KeyEvent e) {
-
+    public void keyPressed(final KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        keyBits.set(keyCode);
+    }
+    public boolean isKeyPressed(final int keyCode) {
+        return keyBits.get(keyCode);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        int keyCode = e.getKeyCode();
+        keyBits.clear(keyCode);
     }
 
     @Override
@@ -202,7 +252,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
         
         xPosition = (int)((e.getX() / width) * maxWidth);      
-        yPosition = (int)(((height - e.getY()) / height) * maxHeight); 
+       // yPosition = (int)(((height - e.getY()) / height) * maxHeight);
     }
 
     @Override

@@ -1,3 +1,4 @@
+
 import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.j2d.TextRenderer;
 import java.awt.Color;
@@ -45,7 +46,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
     ArrayList<Point> eggs = new ArrayList<Point>();
 
-    String textureNames[] = {"basket.png", "egg.png", "exit.png", "gameOverbkg.png", "gamebkg.png", "help.png", "helpbkg.png", "menubkg.png", "play.png", "paused.png", "Chicken1.png", "Chicken2.png", "Chicken3.png"};
+    String textureNames[] = {"basket1.png", "egg.png", "EXIT.png", "GAME OVER bg.png", "gamebg.png", "HELP.png", "HELPbg.png", "HOM1.png", "START-removebg-preview.png", "PAUSE.png", "ch4.png", "ch2.png", "ch3.png"};
     TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
     int textures[] = new int[textureNames.length];
     int previousX = 0;
@@ -161,19 +162,19 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             menu(gl);
 
             // Detect Play
-            if ((isKeyPressed(KeyEvent.VK_ENTER) || ((xPosition <= -90 && xPosition >= -210) && (yPosition <= 160 && yPosition >= 95)))) {
+            if ((isKeyPressed(KeyEvent.VK_ENTER) || ((xPosition <= -90 && xPosition >= -210) && (yPosition <= -70 && yPosition >= -90)))) {
                 firstone = false;
                 askName = true; // user name
             }
 
             // Detect Help
-            if (isKeyPressed(KeyEvent.VK_H) || ((xPosition <= 60 && xPosition >= -60) && (yPosition <= 75 && yPosition >= 5))) {
+            if (isKeyPressed(KeyEvent.VK_H) || ((xPosition <= 60 && xPosition >= -60) && (yPosition <= -70 && yPosition >= -90))) {
                 helppic = true;
                 firstone = false;
             }
 
             // Detect Exit
-            if (isKeyPressed(KeyEvent.VK_ESCAPE) || ((xPosition <= 210 && xPosition >= 90) && (yPosition <= -5 && yPosition >= -75))) {
+            if (isKeyPressed(KeyEvent.VK_ESCAPE) || ((xPosition <= 210 && xPosition >= 90) && (yPosition <= -70 && yPosition >= -90))) {
                 firstone = false;
                 System.exit(0);
             }
@@ -204,7 +205,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
 
         // start game
-        if (startgame) {
+        if (!firstone && startgame) {
             gameplay(gl);
             if (isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 pause = !pause;
@@ -213,8 +214,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
         // rest of menu
         if (pause && !gameover) pause(gl);
-        if (gameover) gameover(gl);
-        if (helppic) {
+        else if (gameover) gameover(gl);
+        if (!firstone && helppic) {
             help(gl);
             if (isKeyPressed(KeyEvent.VK_ESCAPE)) {
                 firstone = true;
@@ -313,7 +314,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
     }
 
-        public void gameplay(GL gl) {
+    public void gameplay(GL gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity();
         GLUT glut = new GLUT();
@@ -321,8 +322,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         DrawBackground(gl);
         x = xPosition;
         y = yPosition;    // نضيف تحديث الـ y
-        DrawSprite(gl, x, y, index, 0.8f);
-
+        DrawBackground(gl);
 
         try {
             handleKeyPress(gl);
@@ -335,7 +335,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
 
         t.beginRendering(500,500);
-        t.setColor(c1.RED);
+        t.setColor(c1.BLACK);
         t.draw("SCORE : " + score,2, 10);
         t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         t.endRendering();
@@ -352,21 +352,15 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         t.endRendering();
 
-        DrawSprite(gl,0,78,  Chickenindex, 2);
-        DrawSprite(gl,7,78,  Chickenindex, 2);
-        DrawSprite(gl,14,78, Chickenindex, 2);
-        DrawSprite(gl,21,78, Chickenindex, 2);
-        DrawSprite(gl,28,78, Chickenindex, 2);
-        DrawSprite(gl,35,78, Chickenindex, 2);
-        DrawSprite(gl,42,78, Chickenindex, 2);
-        DrawSprite(gl,49,78, Chickenindex, 2);
-        DrawSprite(gl,56,78, Chickenindex, 2);
-        DrawSprite(gl,63,78, Chickenindex, 2);
-        DrawSprite(gl,70,78, Chickenindex, 2);
-        DrawSprite(gl,77,78, Chickenindex, 2);
-        DrawSprite(gl,84,78, Chickenindex, 2);
-        DrawSprite(gl,91,78, Chickenindex, 2);
-        DrawSprite(gl,98,78, Chickenindex, 2);
+        DrawSprite(gl,0,76,  Chickenindex, 2);
+        DrawSprite(gl,12,76,  Chickenindex, 2);
+        DrawSprite(gl,24,76, Chickenindex, 2);
+        DrawSprite(gl,36,76, Chickenindex, 2);
+        DrawSprite(gl,48,76, Chickenindex, 2);
+        DrawSprite(gl,60,76, Chickenindex, 2);
+        DrawSprite(gl,72,76, Chickenindex, 2);
+        DrawSprite(gl,84,76, Chickenindex, 2);
+        DrawSprite(gl,92,76, Chickenindex, 2);
 
 
         Chickenindex++;
@@ -670,7 +664,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glDisable(GL.GL_BLEND);
     }
 
-        public void help(GL gl) {
+    public void help(GL gl) {
         h = true;
         gl.glEnable(GL.GL_BLEND);
         gl.glBindTexture(GL.GL_TEXTURE_2D, textures[6]);

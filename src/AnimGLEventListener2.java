@@ -264,6 +264,208 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
     }
 
+        public void gameplay(GL gl) {
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
+        gl.glLoadIdentity();
+        GLUT glut = new GLUT();
+        Font font = new Font("ARIAL", Font.BOLD, 50);
+        DrawBackground(gl);
+        x = xPosition;
+        y = yPosition;    // نضيف تحديث الـ y
+        DrawSprite(gl, x, y, index, 0.8f);
+
+
+        try {
+            handleKeyPress(gl);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        t.beginRendering(500,500);
+        t.setColor(c1.RED);
+        t.draw("SCORE : " + score,2, 10);
+        t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        t.endRendering();
+
+        t.beginRendering(400, 400);
+        t.setColor(c1.BLACK);
+        t.draw("LEVEL : " + level,5, 380);
+        t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        t.endRendering();
+
+        t.beginRendering(200,200);
+        t.setColor(c1.RED);
+        t.draw(""+lifes,190,3);
+        t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        t.endRendering();
+
+        DrawSprite(gl,0,78,  Chickenindex, 2);
+        DrawSprite(gl,7,78,  Chickenindex, 2);
+        DrawSprite(gl,14,78, Chickenindex, 2);
+        DrawSprite(gl,21,78, Chickenindex, 2);
+        DrawSprite(gl,28,78, Chickenindex, 2);
+        DrawSprite(gl,35,78, Chickenindex, 2);
+        DrawSprite(gl,42,78, Chickenindex, 2);
+        DrawSprite(gl,49,78, Chickenindex, 2);
+        DrawSprite(gl,56,78, Chickenindex, 2);
+        DrawSprite(gl,63,78, Chickenindex, 2);
+        DrawSprite(gl,70,78, Chickenindex, 2);
+        DrawSprite(gl,77,78, Chickenindex, 2);
+        DrawSprite(gl,84,78, Chickenindex, 2);
+        DrawSprite(gl,91,78, Chickenindex, 2);
+        DrawSprite(gl,98,78, Chickenindex, 2);
+
+
+        Chickenindex++;
+        if(Chickenindex == 13){
+            Chickenindex = 10 ;
+        }
+        for (int i = 0; i < eggs.size(); i++) {
+             if(eggs.get(i).y == 72){
+                    soundFile = new File("sound3.wav");
+                    try {
+                    audioIn = AudioSystem.getAudioInputStream (soundFile);// getAudioInputStream(soundFile);
+                    } catch (UnsupportedAudioFileException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        clip = AudioSystem.getClip();
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        clip.open(audioIn);
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    clip.start();
+                }
+            if(eggs.get(i).y <69){
+                DrawSprite(gl, eggs.get(i).x, eggs.get(i).y, 1, 0.3f);
+
+            }
+
+            if(!pause && !gameover){
+                eggs.get(i).y -= 2;  // البيض ينزل أسرع
+
+            }
+        }
+
+        for (int j = 0; j < eggs.size(); j++) {
+            int collisionRange = 12; // ممكن تزود أو تقلل حسب حجم الطبق
+            if ((eggs.get(j).y - 5) <= y && ((eggs.get(j).x > x - collisionRange) && (eggs.get(j).x < x + collisionRange))) {
+
+                oldscore = score;
+                eggshanded++;
+                if (eggshanded < 8) {
+                    score += 10;
+                    level = 1;
+                }
+                else if (eggshanded < 15) {
+                    score += 20;
+                    level = 2;
+                } else if (eggshanded < 20) {
+                    score += 30;
+                    level = 3;
+                } else if (eggshanded < 25) {
+                    score += 40;
+                    level = 4;
+                } else if (eggshanded < 30) {
+                    score += 50;
+                    level = 5;
+                } else if (eggshanded < 35) {
+                    score += 30;
+                    level = 6;
+                } else if (eggshanded < 40) {
+                    score += 40;
+                    level = 7;
+                } else if (eggshanded < 45) {
+                    score += 50;
+                    level = 8;
+                } else if (eggshanded < 50) {
+                    score += 60;
+                    level = 9;
+                }
+                eggs.remove(j);
+                t.beginRendering(200, 200);
+                t.setColor(c1.BLACK);
+                t.draw("+" + (score - oldscore), 10, 10);
+                t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+                t.endRendering();
+            } else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
+                lifes--;
+                if (lifes == 0) {
+                    gameover = true;
+                }
+                if(lifes >0 && !gameover)
+                {
+                    soundFile = new File("sound2.wav");
+                    try {
+                    audioIn = AudioSystem.getAudioInputStream (soundFile);// getAudioInputStream(soundFile);
+                    } catch (UnsupportedAudioFileException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        clip = AudioSystem.getClip();
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        clip.open(audioIn);
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    clip.start();
+                }
+                }
+        }
+    }
+
+     public void reset() {
+        firstone = false;
+        eggshanded = 0;
+        level = 1;
+        oldscore = 0;
+        lifes = 3;
+        gameover = false;
+        pause = false;
+        previousX = 0;
+        currentX = 0;
+        score = 0;
+    }
+
+        public void help(GL gl) {
+        h = true;
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[6]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+    }
+
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {

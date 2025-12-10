@@ -24,11 +24,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 public class AnimGLEventListener2 implements GLEventListener, KeyListener, MouseListener , MouseMotionListener {
 
@@ -156,9 +152,90 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     boolean nameEntered = false;
 
     @Override
-    public void display(GLAutoDrawable glAutoDrawable) {
+    public void display(GLAutoDrawable gld) {
+        GL gl = gld.getGL();
 
+        //  menu screen
+        if (firstone) {
+            menu(gl);
+
+            // Detect Play
+            if ((isKeyPressed(KeyEvent.VK_ENTER) || ((xPosition <= -90 && xPosition >= -210) && (yPosition <= 160 && yPosition >= 95)))) {
+                firstone = false;
+                askName = true; // user name
+            }
+
+            // Detect Help
+            if (isKeyPressed(KeyEvent.VK_H) || ((xPosition <= 60 && xPosition >= -60) && (yPosition <= 75 && yPosition >= 5))) {
+                helppic = true;
+                firstone = false;
+            }
+
+            // Detect Exit
+            if (isKeyPressed(KeyEvent.VK_ESCAPE) || ((xPosition <= 210 && xPosition >= 90) && (yPosition <= -5 && yPosition >= -75))) {
+                System.exit(0);
+            }
+        }
+
+        // user for once
+        if (askName) {
+            askName = false;
+            SwingUtilities.invokeLater(() -> {
+                String name = JOptionPane.showInputDialog(null, "Enter your name:", "Player Name", JOptionPane.PLAIN_MESSAGE);
+                if (name != null && !name.isEmpty()) {
+                    playerName = name;
+                    System.out.println("Player: " + playerName);
+
+                    // nro7 l a5tyarat
+                    chooseControl = true;
+                    nameEntered = true;
+                } else {
+                    // lw dost cancle yrg3 l menu bbs msh sh8al
+                    firstone = true;
+                }
+            });
+        }
+
+        // nro7 control
+        if (chooseControl) {
+            chooseControl(gl);
+        }
+
+        // start game
+        if (startgame) {
+            gameplay(gl);
+            if (isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                pause = !pause;
+            }
+        }
+
+        // rest of menu
+        if (pause && !gameover) pause(gl);
+        if (gameover) gameover(gl);
+        if (helppic) {
+            help(gl);
+            if (isKeyPressed(KeyEvent.VK_ESCAPE)) {
+                firstone = true;
+                helppic = false;
+            }
+        }
+
+
+        if (lifes < 1) {
+            gameover = true;
+        }
+
+        if (gameover && isKeyPressed(KeyEvent.VK_ENTER)) {
+            reset();
+            startagain = true;
+        }
+
+        if (startagain) {
+            init(gld);
+            startagain = false;
+        }
     }
+
     public void chooseControl(GL gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();

@@ -324,9 +324,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         GLUT glut = new GLUT();
         Font font = new Font("ARIAL", Font.BOLD, 50);
         DrawBackground(gl);
-        x = xPosition;
-        y = yPosition;    // نضيف تحديث الـ y
-        DrawBackground(gl);
 
         try {
             if (useKeyboard) {
@@ -412,9 +409,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
 
         for (int j = 0; j < eggs.size(); j++) {
-            int collisionRange = 12; // ممكن تزود أو تقلل حسب حجم الطبق
-            if ((eggs.get(j).y - 5) <= y && ((eggs.get(j).x > x - collisionRange) && (eggs.get(j).x < x + collisionRange))) {
 
+            if ((eggs.get(j).y - 5) == y && ((eggs.get(j).x > x-5)&&(eggs.get(j).x <x+5))) {
                 oldscore = score;
                 eggshanded++;
                 if (eggshanded < 8) {

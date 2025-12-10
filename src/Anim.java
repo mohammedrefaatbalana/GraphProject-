@@ -9,7 +9,12 @@ import java.util.*;
 
 public class Anim extends JFrame implements ActionListener {
     public static void main(String[] args) {
+        
+         AnimGLEventListener2 obj = new AnimGLEventListener2();
+         Vector<Integer> vec = new Vector<Integer>();
 
+        vec.add(obj.getscore());
+        obj.sethighscore(Collections.max(vec));
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -21,7 +26,28 @@ public class Anim extends JFrame implements ActionListener {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Anim.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    
+    new Anim();
+    }
+
+    GLCanvas glcanvas;
+    AnimGLEventListener2 listener;
+    Animator animator ;
+    public Anim() {
+        listener = new AnimGLEventListener2();
+        glcanvas = new GLCanvas();
+        glcanvas.addGLEventListener(listener);
+        glcanvas.addKeyListener(listener);
+        glcanvas.addMouseListener(listener);
+        getContentPane().add(glcanvas, BorderLayout.CENTER);
+        animator = new FPSAnimator(glcanvas ,10);
+        setTitle("Chicken");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1200, 700);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setFocusable(true);
+        glcanvas.requestFocus();
+        animator.start();
     }
 
     @Override

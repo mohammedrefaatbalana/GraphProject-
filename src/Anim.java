@@ -11,10 +11,8 @@ public class Anim extends JFrame implements ActionListener {
 
          AnimGLEventListener2 obj = new AnimGLEventListener2();
          Vector<Integer> vec = new Vector<Integer>();
-<<<<<<< HEAD
          vec.add(obj.getscore());
          obj.sethighscore(Collections.max(vec));
-=======
 //         vec.add(obj.getscore());
 //         obj.sethighscore(Collections.max(vec));
          vec.add(obj.getscore());

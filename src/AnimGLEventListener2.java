@@ -448,6 +448,31 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         score = 0;
     }
 
+    //pause game
+    public void pause(GL gl) {
+
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[9]); // صورة pause
+        gl.glPushMatrix();
+
+        gl.glBegin(GL.GL_QUADS);
+        gl.glTexCoord2f(0, 0); gl.glVertex3f(-1, -1, -1);
+        gl.glTexCoord2f(1, 0); gl.glVertex3f( 1, -1, -1);
+        gl.glTexCoord2f(1, 1); gl.glVertex3f( 1,  1, -1);
+        gl.glTexCoord2f(0, 1); gl.glVertex3f(-1,  1, -1);
+        gl.glEnd();
+
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+
+        t.beginRendering(400, 400);
+        t.setColor(Color.BLACK);
+        t.draw("ESC : Resume", 140, 220);
+        t.draw("E   : Exit Game", 120, 180);
+        t.draw("M   : Back To Menu", 95, 140);
+        t.endRendering();
+    }
+
         public void help(GL gl) {
         h = true;
         gl.glEnable(GL.GL_BLEND);

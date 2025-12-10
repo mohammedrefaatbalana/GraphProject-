@@ -11,15 +11,13 @@ public class Anim extends JFrame implements ActionListener {
 
          AnimGLEventListener2 obj = new AnimGLEventListener2();
          Vector<Integer> vec = new Vector<Integer>();
-<<<<<<< HEAD
+
          vec.add(obj.getscore());
          obj.sethighscore(Collections.max(vec));
-=======
-//         vec.add(obj.getscore());
-//         obj.sethighscore(Collections.max(vec));
+
          vec.add(obj.getscore());
        obj.sethighscore(Collections.max(vec));
->>>>>>> 745e790d035084e36d83a941f56b42b985bd90f3
+
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

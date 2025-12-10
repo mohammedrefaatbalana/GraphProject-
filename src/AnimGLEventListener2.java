@@ -154,6 +154,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     @Override
     public void display(GLAutoDrawable gld) {
         GL gl = gld.getGL();
+        gld.addMouseMotionListener(this);
 
         //  menu screen
         if (firstone) {
@@ -173,6 +174,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
             // Detect Exit
             if (isKeyPressed(KeyEvent.VK_ESCAPE) || ((xPosition <= 210 && xPosition >= 90) && (yPosition <= -5 && yPosition >= -75))) {
+                firstone = false;
                 System.exit(0);
             }
         }

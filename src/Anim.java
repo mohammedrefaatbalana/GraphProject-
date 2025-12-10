@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.media.opengl.*;
-import javax.swing.*;
 import java.util.*;
 
 public class Anim extends JFrame implements ActionListener {

@@ -12,6 +12,8 @@ public class Anim extends JFrame implements ActionListener {
          Vector<Integer> vec = new Vector<Integer>();
 //         vec.add(obj.getscore());
 //         obj.sethighscore(Collections.max(vec));
+         vec.add(obj.getscore());
+       obj.sethighscore(Collections.max(vec));
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -35,6 +37,7 @@ public class Anim extends JFrame implements ActionListener {
         glcanvas.addGLEventListener(listener);
         glcanvas.addKeyListener(listener);
         glcanvas.addMouseListener(listener);
+        glcanvas.addMouseMotionListener(listener);
         getContentPane().add(glcanvas, BorderLayout.CENTER);
         animator = new FPSAnimator(glcanvas ,10);
         setTitle("Chicken");

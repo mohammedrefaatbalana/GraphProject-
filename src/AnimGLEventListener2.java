@@ -261,6 +261,29 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
     }
+    Color c1 = new Color(0, 0, 0);
+
+    //background
+    public void DrawBackground(GL gl) {
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[4]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+    }
+    boolean soundone = false;
 
     public void chooseControl(GL gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
@@ -459,6 +482,69 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
     }
 
+    int scoreeee = 0;
+    int soundgameover = 0 ;
+    //game over page
+    public void gameover(GL gl) {
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[3]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+        t.beginRendering(200, 200);
+        t.setColor(c1.WHITE);
+        scoreeee = score;
+        t.draw("Score: " + scoreeee, 78, 130);
+        t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        t.endRendering();
+
+        t.beginRendering(200,200);
+        t.setColor(c1.WHITE);
+        t.draw("High: " + highscore, 78 , 115);
+        t.setColor(0.0f, 0.0f, 0.0f, 0.0f);
+        t.endRendering();
+
+        if(highscore < score){
+            highscore = score;
+        }
+        if(soundgameover == 1){
+            soundFile = new File("gameover.wav");
+            try {
+                audioIn = AudioSystem.getAudioInputStream (soundFile);// getAudioInputStream(soundFile);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                clip = AudioSystem.getClip();
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                clip.open(audioIn);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            clip.start();
+        }
+        soundgameover++;
+    }
+
      public void reset() {
         firstone = false;
         eggshanded = 0;
@@ -497,6 +583,93 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         t.endRendering();
     }
 
+    boolean music = false;
+    //home page
+    public void menu(GL gl) {
+        music = true;
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[7]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[2]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glTranslated(x / (maxWidth / 2.0) - .5, y / (maxHeight / 2.0) - 0.5, 0);
+        gl.glScaled(0.2, 0.2, 0.2);
+
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[5]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glTranslated(x / (maxWidth / 2.0) - 1.0, y / (maxHeight / 2.0) + -0.5, 0);
+        gl.glScaled(0.2, 0.2, 0.2);
+
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[8]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glTranslated(x / (maxWidth / 2.0) - 1.5, y / (maxHeight / 2.0) + (-0.5), 0);
+        gl.glScaled(0.2, 0.2, 0.7);
+
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+    }
+
         public void help(GL gl) {
         h = true;
         gl.glEnable(GL.GL_BLEND);
@@ -517,6 +690,44 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glPopMatrix();
     }
 
+    public int getscore(){
+        return highscore ;
+    }
+    public void sethighscore(int highscoree){
+        highscore = highscoree;
+    }
+    //handle press key function
+    public void handleKeyPress(GL gl) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+
+        if (isKeyPressed(KeyEvent.VK_LEFT)) {
+            if (x > 0) {
+                x -= 2;
+                DrawSprite(gl, x, y, 0,0.8f);
+                if(!gameover){
+                    soundFile = new File("sound2.wav");
+                    audioIn = AudioSystem.getAudioInputStream (soundFile);// getAudioInputStream(soundFile);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioIn);
+                    clip.start();
+                }
+            }
+        }
+        if (isKeyPressed(KeyEvent.VK_RIGHT)) {
+            if (x < maxWidth - 10) {
+                x += 2;
+                DrawSprite(gl, x, y, 0, 0.8f);
+                if(!gameover){
+                    soundFile = new File("sound2.wav");
+                    audioIn = AudioSystem.getAudioInputStream (soundFile);// getAudioInputStream(soundFile);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioIn);
+                    clip.start();
+                }
+            }
+        }
+        DrawSprite(gl, x, y, index,0.8f);
+
+    }
 
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {

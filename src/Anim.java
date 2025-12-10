@@ -1,10 +1,15 @@
+package Texture;
+import com.sun.opengl.util.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import javax.media.opengl.*;
+import javax.swing.*;
+import java.util.*;
 
 public class Anim extends JFrame implements ActionListener {
     public static void main(String[] args) {
-
+    
     }
 
     @Override

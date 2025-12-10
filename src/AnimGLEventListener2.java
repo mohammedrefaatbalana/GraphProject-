@@ -238,6 +238,30 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
     }
 
+    public void DrawSprite(GL gl, int x, int y, int indexx, float scale) {
+        GLUT glut = new GLUT();
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[indexx]);	// Turn Blending On
+
+        gl.glPushMatrix();
+        gl.glTranslated(x / (maxWidth / 2.0) - 0.9, y / (maxHeight / 2.0) - 0.9, 0);
+        gl.glScaled(0.1 * scale, 0.1 * scale, 1);
+        //System.out.println(x +" " + y);
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+    }
+
     public void chooseControl(GL gl) {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
         gl.glLoadIdentity();

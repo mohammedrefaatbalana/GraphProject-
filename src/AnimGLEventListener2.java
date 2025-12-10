@@ -221,9 +221,9 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         else if (gameover) gameover(gl);
         if (!firstone && helppic) {
             help(gl);
-            if (isKeyPressed(KeyEvent.VK_ESCAPE)) {
-                firstone = true;
+            if (isKeyPressed(KeyEvent.VK_BACK_SPACE)) {
                 helppic = false;
+                firstone = true;
             }
         }
 

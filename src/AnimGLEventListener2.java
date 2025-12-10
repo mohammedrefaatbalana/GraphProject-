@@ -30,7 +30,7 @@ import javax.swing.*;
 public class AnimGLEventListener2 implements GLEventListener, KeyListener, MouseListener , MouseMotionListener {
 
     TextRenderer t = new TextRenderer(Font.decode("SansSerif"));
-    final String assetsFolderName = "Texture";
+    final String assetsFolderName = "";
     int maxWidth = 100;
     int maxHeight = 100;
     int x = maxWidth / 2, y = 1/* maxHeight / 2*/;
@@ -66,7 +66,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
         for (int i = 0; i < textureNames.length; i++) {
             try {
-                texture[i] = TextureReader.readTexture(assetsFolderName + "//" + textureNames[i], true);
+                String path = assetsFolderName.isEmpty()
+                        ? textureNames[i]
+                        : assetsFolderName + File.separator + textureNames[i];
+                texture[i] = TextureReader.readTexture(path, true);
+
                 gl.glBindTexture(GL.GL_TEXTURE_2D, textures[i]);
                 new GLU().gluBuild2DMipmaps(
                         GL.GL_TEXTURE_2D,
@@ -325,7 +329,12 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         DrawBackground(gl);
 
         try {
-            handleKeyPress(gl);
+            if (useKeyboard) {
+                handleKeyPress(gl); // keyboard move
+            } else if (useMouse) {
+                x = xPosition; // mouse move
+                DrawSprite(gl, x, y, index, 0.8f); // رسم السلة
+            }
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -472,7 +481,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                     }
                     clip.start();
                 }
-                }
+            }
         }
     }
 

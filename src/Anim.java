@@ -1,4 +1,3 @@
-package Texture;
 import com.sun.opengl.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +7,11 @@ import java.util.*;
 
 public class Anim extends JFrame implements ActionListener {
     public static void main(String[] args) {
-        
+
          AnimGLEventListener2 obj = new AnimGLEventListener2();
          Vector<Integer> vec = new Vector<Integer>();
-
-        vec.add(obj.getscore());
-        obj.sethighscore(Collections.max(vec));
+//         vec.add(obj.getscore());
+//         obj.sethighscore(Collections.max(vec));
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

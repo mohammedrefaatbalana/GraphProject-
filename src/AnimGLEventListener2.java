@@ -690,7 +690,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void sethighscore(int highscoree){
         highscore = highscoree;
     }
-    //handle press key function
     public void handleKeyPress(GL gl) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
         if (isKeyPressed(KeyEvent.VK_LEFT)) {
@@ -722,7 +721,48 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         DrawSprite(gl, x, y, index,0.8f);
 
     }
+    public BitSet keyBits = new BitSet(256);
 
+    //handle press key function
+    public void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+
+        // ✅ تشغيل / إيقاف Pause
+        if (key == KeyEvent.VK_ESCAPE) {
+            pause = !pause;
+            return;
+        }
+
+        // ✅ لو اللعبة متوقفة
+        if (pause) {
+
+            // ✅ خروج نهائي
+            if (key == KeyEvent.VK_E) {
+                System.exit(0);
+            }
+
+            // ✅ رجوع للمينيو
+            if (key == KeyEvent.VK_M) {
+
+                pause = false;
+                startgame = false;
+                chooseControl = false;
+                firstone = true;
+                gameover = false;
+
+                useKeyboard = false;
+                useMouse = false;
+
+                reset();
+            }
+
+            return; // ⛔ يمنع أي input تاني
+        }
+
+        // ✅ باقي مفاتيح اللعبة تسجّل عادي
+        keyBits.set(key);
+    }
     @Override
     public void reshape(GLAutoDrawable glAutoDrawable, int i, int i1, int i2, int i3) {
 
@@ -737,13 +777,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void keyTyped(KeyEvent e) {
 
     }
-    public BitSet keyBits = new BitSet(256);
 
-    @Override
-    public void keyPressed(final KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        keyBits.set(keyCode);
-    }
+
     public boolean isKeyPressed(final int keyCode) {
         return keyBits.get(keyCode);
     }
@@ -754,9 +789,15 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         keyBits.clear(keyCode);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
+    @Override    public void mouseClicked(MouseEvent e) {
+        double x = e.getX();
+        double y = e.getY();
+        Component c = e.getComponent();
+        double width = c.getWidth();
+        double height = c.getHeight();
 
+        xPosition = (int) ((x / width) * 600) - 300;
+        yPosition = 175 - ((int) ((y / height) * 350));
     }
 
     @Override

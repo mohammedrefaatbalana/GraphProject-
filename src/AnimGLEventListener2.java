@@ -29,7 +29,11 @@ import javax.swing.*;
 
 public class AnimGLEventListener2 implements GLEventListener, KeyListener, MouseListener , MouseMotionListener {
 
-    TextRenderer t = new TextRenderer(Font.decode("SansSerif"));
+    TextRenderer t = new TextRenderer(
+            new Font("SansSerif", Font.BOLD, 12),
+            true,   // anti-aliased
+            true    // use fractional metrics
+    );
     final String assetsFolderName = "";
     int maxWidth = 100;
     int maxHeight = 100;

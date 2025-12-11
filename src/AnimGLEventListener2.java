@@ -266,6 +266,63 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
     }
 
+    public void drawHighScores(GL gl) {
+        GLUT glut = new GLUT();
+        gl.glMatrixMode(GL.GL_PROJECTION);
+        gl.glPushMatrix();
+        gl.glLoadIdentity();
+        gl.glOrtho(-1, 1, -1, 1, -1, 1); // نظام إحداثيات بسيط للشاشة
+        gl.glMatrixMode(GL.GL_MODELVIEW);
+        gl.glPushMatrix();
+        gl.glLoadIdentity();
+
+        gl.glColor3f(1f, 1f, 1f); // أبيض
+
+        int startY = 80;
+        try {
+            File file = new File("highscores.txt");
+            if(!file.exists()) return;
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                gl.glRasterPos2f(-0.5f, startY / 200f); // أصغر ويكون في النص
+                // ضبط مكان النص
+                for (int i = 0; i < line.length(); i++) {
+                    glut.glutBitmapCharacter(GLUT.BITMAP_HELVETICA_18, line.charAt(i));
+                }
+                startY -= 15;
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        gl.glPopMatrix();
+        gl.glMatrixMode(GL.GL_PROJECTION);
+        gl.glPopMatrix();
+        gl.glMatrixMode(GL.GL_MODELVIEW);
+    }
+
+    
+    public void saveScore() {
+        if (playerName != null && !playerName.isEmpty()) { // تأكد ان الاسم موجود
+            try {
+                FileWriter fw = new FileWriter("highscores.txt", true); // Append mode
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(playerName + " - " + score); // هنا الاسم والسكور
+                pw.close();
+                fw.close();
+                System.out.println("Score saved successfully for " + playerName + "!");
+            } catch (IOException e) {
+                System.out.println("Error writing to file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Player name is empty, score not saved.");
+        }
+    }
+
+
     public void DrawSprite(GL gl, int x, int y, int indexx, float scale) {
         GLUT glut = new GLUT();
         gl.glEnable(GL.GL_BLEND);

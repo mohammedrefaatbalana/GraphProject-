@@ -904,6 +904,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 gameover = false;
                 useKeyboard = false;
                 useMouse = false;
+                askName = false;
                 firstone = true;
 
             }

@@ -39,7 +39,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     int maxHeight = 100;
     int x = maxWidth / 2, y = 1/* maxHeight / 2*/;
     int index = 0;
-    int indexx = 0;
     int yy = 100;
     public int xPosition = 1000;
     public int yPosition = 1000;
@@ -49,6 +48,9 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
 
     ArrayList<Point> eggs = new ArrayList<Point>();
+
+    boolean scoreSaved = false; 
+    boolean showHighScores = false;
 
     String textureNames[] = {"basket1.png", "egg.png", "EXIT.png", "GAME OVER bg.png", "gamebg.png", "HELP.png", "HELPbg.png", "HOM1.png", "START-removebg-preview.png", "PAUSE.png", "ch4.png", "ch2.png", "ch3.png"};
     TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];

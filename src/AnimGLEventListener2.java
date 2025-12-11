@@ -671,6 +671,29 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
+        if(firstone) {
+            soundFile = new File("outgame.wav");
+            try {
+                audioIn = AudioSystem.getAudioInputStream(soundFile);// getAudioInputStream(soundFile);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                clip = AudioSystem.getClip();
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                clip.open(audioIn);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            clip.start();
+        }
     }
 
     public void help(GL gl) {

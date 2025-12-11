@@ -8,8 +8,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import static java.awt.SystemColor.menu;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import javax.media.opengl.*;
 import java.util.BitSet;
@@ -52,7 +51,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     boolean scoreSaved = false; 
     boolean showHighScores = false;
 
-    String textureNames[] = {"basket1.png", "egg.png", "EXIT.png", "GAME OVER bg.png", "gamebg.png", "HELP.png", "HELPbg.png", "HOM1.png", "START-removebg-preview.png", "PAUSE.png", "ch4.png", "ch2.png", "ch3.png"};
+    String textureNames[] = {"basket1.png", "egg.png", "EXIT.png", "GAME OVER bg.png", "gamebg.png", "HELP.png", "HELPbg.png", "HOM1.png", "START-removebg-preview.png", "PAUSE.png", "ch4.png", "ch2.png", "ch3.png", "BEFOREGAME.png"};
     TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
     int textures[] = new int[textureNames.length];
     int previousX = 0;
@@ -371,14 +370,32 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     boolean soundone = false;
 
     public void chooseControl(GL gl) {
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-        gl.glLoadIdentity();
+//        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+//        gl.glLoadIdentity();
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[13]);
+        // Turn Blending On
+        gl.glPushMatrix();
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+
 
         t.beginRendering(400, 400);
-        t.setColor(Color.BLACK);
-        t.draw("Choose Control Mode", 80, 300);
-        t.draw("Press K for Keyboard", 100, 240);
-        t.draw("Press M for Mouse", 100, 200);
+     //   t.setColor(Color.BLACK);
+//        t.draw("Choose Control Mode", 80, 300);
+//        t.draw("Press K for Keyboard", 100, 240);
+//        t.draw("Press M for Mouse", 100, 200);
         t.endRendering();
 
         // choose keyboard
@@ -586,6 +603,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
+
         t.beginRendering(200, 200);
         t.setColor(c1.WHITE);
         scoreeee = score;

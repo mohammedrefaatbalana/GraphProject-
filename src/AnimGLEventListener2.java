@@ -578,12 +578,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
 
-        t.beginRendering(400, 400);
-        t.setColor(Color.BLACK);
-        t.draw("ESC : Resume", 140, 220);
-        t.draw("E   : Exit Game", 120, 180);
-        t.draw("M   : Back To Menu", 95, 140);
-        t.endRendering();
     }
 
     boolean music = false;
@@ -736,17 +730,37 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
+        // predd r restart
+        if (gameover) {
+            if (key == KeyEvent.VK_R) {
+                reset();
+                startagain = true;
+            }
+            //press e exit
+            if (key == KeyEvent.VK_E) {
+                System.exit(0);
+            }
+//            if (key == KeyEvent.VK_M) {
+//                reset();               // إعادة كل متغيرات اللعبة الأساسية
+//                firstone = true;       // نرجع للمينيو
+//                gameover = false;
+//                startgame = false;
+//                chooseControl = false;
+//                useKeyboard = false;
+//                useMouse = false;
+//                askName= false;
+//            }
+        }
 
-        // ✅ تشغيل / إيقاف Pause
         if (key == KeyEvent.VK_ESCAPE) {
             pause = !pause;
             return;
         }
 
-        // ✅ لو اللعبة متوقفة
+        // in pause
         if (pause) {
 
-            // ✅ خروج نهائي
+            // e exit
             if (key == KeyEvent.VK_E) {
                 System.exit(0);
             }

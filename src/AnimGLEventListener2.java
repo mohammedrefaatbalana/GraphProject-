@@ -1,23 +1,16 @@
-
 import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.j2d.TextRenderer;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Point;
-import static java.awt.SystemColor.menu;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import javax.media.opengl.*;
 import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import static javafx.scene.text.Font.font;
 import javax.media.opengl.glu.GLU;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -48,7 +41,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
     ArrayList<Point> eggs = new ArrayList<Point>();
 
-    boolean scoreSaved = false; 
+    boolean scoreSaved = false;
     boolean showHighScores = false;
 
     String textureNames[] = {"basket1.png", "egg.png", "EXIT.png", "GAME OVER bg.png", "gamebg.png", "HELP.png", "HELPbg.png", "HOM1.png", "START-removebg-preview.png", "PAUSE.png", "ch4.png", "ch2.png", "ch3.png", "BEFOREGAME.png"};
@@ -164,12 +157,15 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     @Override
     public void display(GLAutoDrawable gld) {
         GL gl = gld.getGL();
+        gl.glMatrixMode(GL.GL_MODELVIEW);
+        gl.glLoadIdentity();
+
         gld.addMouseMotionListener(this);
 
          if (showHighScores) {
             gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // مسح الشاشة
             drawHighScores(gl);
-            return; 
+            return;
         }
 
         //  menu screen
@@ -253,7 +249,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             HighScoresDisplay.showHighScores("highscores.txt", false);
         }
 
-        
+
         if (gameover && isKeyPressed(KeyEvent.VK_ENTER)) {
             reset();
             startagain = true;
@@ -303,7 +299,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glMatrixMode(GL.GL_MODELVIEW);
     }
 
-    
+
     public void saveScore() {
         if (playerName != null && !playerName.isEmpty()) { // تأكد ان الاسم موجود
             try {
@@ -419,11 +415,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity();
         GLUT glut = new GLUT();
-        TextRenderer t = new TextRenderer(
-                new Font("SansSerif", Font.BOLD, 12),
-                true,   // anti-aliased
-                true    // use fractional metrics
-        );
+//        TextRenderer t = new TextRenderer(
+//                new Font("SansSerif", Font.BOLD, 12),
+//                true,   // anti-aliased
+//                true    // use fractional metrics
+//        );
         DrawBackground(gl);
 
         try {
@@ -970,8 +966,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         double width = c.getWidth();
         double height = c.getHeight();
 
-        
-        xPosition = (int)((e.getX() / width) * maxWidth);      
+
+        xPosition = (int)((e.getX() / width) * maxWidth);
        // yPosition = (int)(((height - e.getY()) / height) * maxHeight);
     }
 

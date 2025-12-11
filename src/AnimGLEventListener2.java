@@ -753,7 +753,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
-        // predd r restart
+        // press r restart
         if (gameover) {
             if (key == KeyEvent.VK_R) {
                 reset();
@@ -763,20 +763,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             if (key == KeyEvent.VK_E) {
                 System.exit(0);
             }
-//            if (key == KeyEvent.VK_M) {
-//                reset();               // إعادة كل متغيرات اللعبة الأساسية
-//                firstone = true;       // نرجع للمينيو
-//                gameover = false;
-//                startgame = false;
-//                chooseControl = false;
-//                useKeyboard = false;
-//                useMouse = false;
-//                askName= false;
-//            }
+
         }
         if (helppic){
             if (key == KeyEvent.VK_BACK_SPACE) {
-
+                helppic = false;
                 pause = false;
                 startgame = false;
                 chooseControl = false;
@@ -785,6 +776,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 useMouse = false;
                 firstone = true;
             }
+            return;
         }
 
         if (key == KeyEvent.VK_ESCAPE) {
@@ -801,6 +793,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             }
 
             if (key == KeyEvent.VK_M) {
+                helppic = false;
                 pause = false;
                 startgame = false;
                 chooseControl = false;

@@ -326,7 +326,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity();
         GLUT glut = new GLUT();
-        Font font = new Font("ARIAL", Font.BOLD, 50);
+        TextRenderer t = new TextRenderer(
+                new Font("SansSerif", Font.BOLD, 12),
+                true,   // anti-aliased
+                true    // use fractional metrics
+        );
         DrawBackground(gl);
 
         try {

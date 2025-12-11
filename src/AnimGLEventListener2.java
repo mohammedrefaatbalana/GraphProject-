@@ -167,6 +167,12 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         GL gl = gld.getGL();
         gld.addMouseMotionListener(this);
 
+         if (showHighScores) {
+            gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // مسح الشاشة
+            drawHighScores(gl);
+            return; 
+        }
+
         //  menu screen
         if (firstone) {
             menu(gl);
@@ -234,10 +240,21 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
 
 
-        if (lifes < 1) {
+        if (lifes < 1 && !gameover) {
             gameover = true;
+            if(!scoreSaved){
+                saveScore();
+                scoreSaved = true;
+            }
+            showHighScores = true;
         }
 
+        if (gameover) {
+            HighScoresDisplay.addScore("highscores.txt", playerName, score);
+            HighScoresDisplay.showHighScores("highscores.txt", false);
+        }
+
+        
         if (gameover && isKeyPressed(KeyEvent.VK_ENTER)) {
             reset();
             startagain = true;

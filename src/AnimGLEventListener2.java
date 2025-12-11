@@ -160,7 +160,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gld.addMouseMotionListener(this);
 
          if (showHighScores) {
-            gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // مسح الشاشة
             gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // nms7 screen
             drawHighScores(gl);
             return;
@@ -202,7 +201,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                     chooseControl = true;
                     nameEntered = true;
                 } else {
-                    // lw dost cancle yrg3 l menu bbs msh sh8al
                     // lw dost cancel yrg3 l menu bbs msh sh8al
                     firstone = true;
                 }
@@ -265,13 +263,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glPushMatrix();
         gl.glLoadIdentity();
-        gl.glOrtho(-1, 1, -1, 1, -1, 1); // نظام إحداثيات بسيط للشاشة
         gl.glOrtho(-1, 1, -1, 1, -1, 1);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glPushMatrix();
         gl.glLoadIdentity();
 
-        gl.glColor3f(1f, 1f, 1f); // أبيض
         gl.glColor3f(1f, 1f, 1f);
 
         int startY = 80;
@@ -282,8 +278,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while ((line = br.readLine()) != null) {
-                gl.glRasterPos2f(-0.5f, startY / 200f); // أصغر ويكون في النص
-                // ضبط مكان النص
                 gl.glRasterPos2f(-0.5f, startY / 200f);
 
                 for (int i = 0; i < line.length(); i++) {
@@ -304,12 +298,10 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
 
     public void saveScore() {
-        if (playerName != null && !playerName.isEmpty()) { // تأكد ان الاسم موجود
         if (playerName != null && !playerName.isEmpty()) { // al name exist
             try {
                 FileWriter fw = new FileWriter("highscores.txt", true); // Append mode
                 PrintWriter pw = new PrintWriter(fw);
-                pw.println(playerName + " - " + score); // هنا الاسم والسكور
                 pw.println(playerName + " - " + score);
                 pw.close();
                 fw.close();
@@ -424,7 +416,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 handleKeyPress(gl); // keyboard move
             } else if (useMouse) {
                 x = xPosition; // mouse move
-                DrawSprite(gl, x, y, index, 0.8f); // رسم السلة
                 DrawSprite(gl, x, y, index, 0.8f); // draw basket
             }
         } catch (UnsupportedAudioFileException ex) {
@@ -498,38 +489,29 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             }
 
             if(!pause && !gameover){
-                eggs.get(i).y -= 2;  // البيض ينزل أسرع
                 eggs.get(i).y -= 2;  // speed ll egg
 
             }
         }
 
         for (int j = 0; j < eggs.size(); j++) {
-// أبعاد السلة
             // basket
             int plateWidth = 15;
             int plateHeight = 10;
-
-// أبعاد البيضة
             //egg
             int eggW = 5;
             int eggH = 5;
 
-// مستطيل السلة
             Rectangle basket = new Rectangle(x - plateWidth/2, y, plateWidth, plateHeight);
 
-// مستطيل البيضة
             Rectangle egg = new Rectangle(eggs.get(j).x, eggs.get(j).y, eggW, eggH);
 
-// كوليجن صح 100%
 
             if (egg.intersects(basket)) {
-                // البيضة اتقفشت
                 // egg fe basket
                 oldscore = score;
                 eggshanded++;
 
-                // تعديل المستوى
                 // 3ly level
                 if (eggshanded < 8){
                     score += 10;
@@ -562,7 +544,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 }
                 eggs.remove(j);
             }
-            // لو البيضة وقعت لآخر الشاشة وممسكتش
             // lww egg 3dt 2lb y2ll
             if (eggs.get(j).y <= 0) {
                 lifes--;
@@ -572,13 +553,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 }
 
                 eggs.remove(j);
-                j--; // ضروري عشان اللوب مايتلغبطش
-                continue;
                 j--;
             }
 
             else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
-    
+
                 if (lifes == 0) {
                     gameover = true;
                 }
@@ -928,11 +907,9 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 firstone = true;
 
             }
-            return; // ⛔ يمنع أي input تاني
             return; // yrg3 3la tol
         }
 
-        // ✅ باقي مفاتيح اللعبة تسجّل عادي
         // ay zorar sh8al
         keyBits.set(key);
     }

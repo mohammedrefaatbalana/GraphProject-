@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="710c068b-fc58-424d-8532-fb9f9ddad683" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Anim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Anim.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AnimGLEventListener2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnimGLEventListener2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HighScoresDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/HighScoresDisplay.java" afterDir="false" />
     </list>

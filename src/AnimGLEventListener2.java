@@ -415,11 +415,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
         gl.glLoadIdentity();
         GLUT glut = new GLUT();
-//        TextRenderer t = new TextRenderer(
-//                new Font("SansSerif", Font.BOLD, 12),
-//                true,   // anti-aliased
-//                true    // use fractional metrics
-//        );
+        Font font = new Font("ARIAL", Font.BOLD, 50);
         DrawBackground(gl);
 
         try {
@@ -506,13 +502,30 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         }
 
         for (int j = 0; j < eggs.size(); j++) {
+// أبعاد السلة
+            int plateWidth = 15;
+            int plateHeight = 10;
 
-            if ((eggs.get(j).y - 5) == y && ((eggs.get(j).x > x-5)&&(eggs.get(j).x <x+5))) {
+// أبعاد البيضة
+            int eggW = 5;
+            int eggH = 5;
+
+// مستطيل السلة
+            Rectangle basket = new Rectangle(x - plateWidth/2, y, plateWidth, plateHeight);
+
+// مستطيل البيضة
+            Rectangle egg = new Rectangle(eggs.get(j).x, eggs.get(j).y, eggW, eggH);
+
+// كوليجن صح 100%
+            if (egg.intersects(basket)) {
+                // البيضة اتقفشت
                 oldscore = score;
                 eggshanded++;
-                if (eggshanded < 8) {
+
+                // تعديل المستوى
+                if (eggshanded < 8){
                     score += 10;
-                    level = 1;
+                    level=1;
                 }
                 else if (eggshanded < 15) {
                     score += 20;
@@ -540,12 +553,21 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                     level = 9;
                 }
                 eggs.remove(j);
-                t.beginRendering(200, 200);
-                t.setColor(c1.BLACK);
-                t.draw("+" + (score - oldscore), 10, 10);
-                t.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-                t.endRendering();
-            } else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
+            }
+            // لو البيضة وقعت لآخر الشاشة وممسكتش
+            if (eggs.get(j).y <= 0) {
+                lifes--;
+
+                if (lifes == 0) {
+                    gameover = true;
+                }
+
+                eggs.remove(j);
+                j--; // ضروري عشان اللوب مايتلغبطش
+                continue;
+            }
+
+            else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
                 lifes--;
                 if (lifes == 0) {
                     gameover = true;

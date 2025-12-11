@@ -566,7 +566,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             }
 
             else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
-                lifes--;
+    
                 if (lifes == 0) {
                     gameover = true;
                 }

@@ -1,6 +1,5 @@
 import com.sun.opengl.util.GLUT;
 import com.sun.opengl.util.j2d.TextRenderer;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -55,8 +54,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void init(GLAutoDrawable gld) {
 
         GL gl = gld.getGL();
-        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
-        gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        gl.glEnable(GL.GL_TEXTURE_2D);
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         gl.glGenTextures(textureNames.length, textures, 0);
 
@@ -162,6 +161,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
          if (showHighScores) {
             gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // مسح الشاشة
+            gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // nms7 screen
             drawHighScores(gl);
             return;
         }
@@ -203,6 +203,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                     nameEntered = true;
                 } else {
                     // lw dost cancle yrg3 l menu bbs msh sh8al
+                    // lw dost cancel yrg3 l menu bbs msh sh8al
                     firstone = true;
                 }
             });
@@ -265,11 +266,13 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
         gl.glPushMatrix();
         gl.glLoadIdentity();
         gl.glOrtho(-1, 1, -1, 1, -1, 1); // نظام إحداثيات بسيط للشاشة
+        gl.glOrtho(-1, 1, -1, 1, -1, 1);
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glPushMatrix();
         gl.glLoadIdentity();
 
         gl.glColor3f(1f, 1f, 1f); // أبيض
+        gl.glColor3f(1f, 1f, 1f);
 
         int startY = 80;
         try {
@@ -281,6 +284,8 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             while ((line = br.readLine()) != null) {
                 gl.glRasterPos2f(-0.5f, startY / 200f); // أصغر ويكون في النص
                 // ضبط مكان النص
+                gl.glRasterPos2f(-0.5f, startY / 200f);
+
                 for (int i = 0; i < line.length(); i++) {
                     glut.glutBitmapCharacter(GLUT.BITMAP_HELVETICA_18, line.charAt(i));
                 }
@@ -300,10 +305,12 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
     public void saveScore() {
         if (playerName != null && !playerName.isEmpty()) { // تأكد ان الاسم موجود
+        if (playerName != null && !playerName.isEmpty()) { // al name exist
             try {
                 FileWriter fw = new FileWriter("highscores.txt", true); // Append mode
                 PrintWriter pw = new PrintWriter(fw);
                 pw.println(playerName + " - " + score); // هنا الاسم والسكور
+                pw.println(playerName + " - " + score);
                 pw.close();
                 fw.close();
                 System.out.println("Score saved successfully for " + playerName + "!");
@@ -386,10 +393,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
 
         t.beginRendering(400, 400);
-     //   t.setColor(Color.BLACK);
-//        t.draw("Choose Control Mode", 80, 300);
-//        t.draw("Press K for Keyboard", 100, 240);
-//        t.draw("Press M for Mouse", 100, 200);
         t.endRendering();
 
         // choose keyboard
@@ -422,6 +425,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             } else if (useMouse) {
                 x = xPosition; // mouse move
                 DrawSprite(gl, x, y, index, 0.8f); // رسم السلة
+                DrawSprite(gl, x, y, index, 0.8f); // draw basket
             }
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(AnimGLEventListener2.class.getName()).log(Level.SEVERE, null, ex);
@@ -495,16 +499,19 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
             if(!pause && !gameover){
                 eggs.get(i).y -= 2;  // البيض ينزل أسرع
+                eggs.get(i).y -= 2;  // speed ll egg
 
             }
         }
 
         for (int j = 0; j < eggs.size(); j++) {
 // أبعاد السلة
+            // basket
             int plateWidth = 15;
             int plateHeight = 10;
 
 // أبعاد البيضة
+            //egg
             int eggW = 5;
             int eggH = 5;
 
@@ -515,12 +522,15 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             Rectangle egg = new Rectangle(eggs.get(j).x, eggs.get(j).y, eggW, eggH);
 
 // كوليجن صح 100%
+
             if (egg.intersects(basket)) {
                 // البيضة اتقفشت
+                // egg fe basket
                 oldscore = score;
                 eggshanded++;
 
                 // تعديل المستوى
+                // 3ly level
                 if (eggshanded < 8){
                     score += 10;
                     level=1;
@@ -553,6 +563,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 eggs.remove(j);
             }
             // لو البيضة وقعت لآخر الشاشة وممسكتش
+            // lww egg 3dt 2lb y2ll
             if (eggs.get(j).y <= 0) {
                 lifes--;
 
@@ -563,6 +574,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 eggs.remove(j);
                 j--; // ضروري عشان اللوب مايتلغبطش
                 continue;
+                j--;
             }
 
             else if ((eggs.get(j).y - 5) == y && (!(eggs.get(j).x > x-5)||(!(eggs.get(j).x <x+5))))  {
@@ -907,7 +919,6 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
             }
 
             if (key == KeyEvent.VK_M) {
-                helppic = false;
                 pause = false;
                 startgame = false;
                 chooseControl = false;
@@ -918,9 +929,11 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 
             }
             return; // ⛔ يمنع أي input تاني
+            return; // yrg3 3la tol
         }
 
         // ✅ باقي مفاتيح اللعبة تسجّل عادي
+        // ay zorar sh8al
         keyBits.set(key);
     }
     @Override
@@ -984,11 +997,7 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
     public void mouseMoved(MouseEvent e) {
         Component c = e.getComponent();
         double width = c.getWidth();
-        double height = c.getHeight();
-
-
-        xPosition = (int)((e.getX() / width) * maxWidth);
-       // yPosition = (int)(((height - e.getY()) / height) * maxHeight);
+         xPosition = (int)((e.getX() / width) * maxWidth);
     }
 
     @Override

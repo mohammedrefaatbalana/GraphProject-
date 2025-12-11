@@ -15,6 +15,7 @@ public class HighScoresDisplay {
             List<String> scoresList = new ArrayList<>();
 
             // لو الملف موجود، اقراه كله الأول
+            // aa2ra file kolo
             if (file.exists()) {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNextLine()) {

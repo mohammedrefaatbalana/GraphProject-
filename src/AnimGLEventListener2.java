@@ -751,6 +751,18 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
 //                askName= false;
 //            }
         }
+        if (helppic){
+            if (key == KeyEvent.VK_BACK_SPACE) {
+
+                pause = false;
+                startgame = false;
+                chooseControl = false;
+                gameover = false;
+                useKeyboard = false;
+                useMouse = false;
+                firstone = true;
+            }
+        }
 
         if (key == KeyEvent.VK_ESCAPE) {
             pause = !pause;
@@ -765,21 +777,16 @@ public class AnimGLEventListener2 implements GLEventListener, KeyListener, Mouse
                 System.exit(0);
             }
 
-            // ✅ رجوع للمينيو
             if (key == KeyEvent.VK_M) {
-
                 pause = false;
                 startgame = false;
                 chooseControl = false;
-                firstone = true;
                 gameover = false;
-
                 useKeyboard = false;
                 useMouse = false;
+                firstone = true;
 
-                reset();
             }
-
             return; // ⛔ يمنع أي input تاني
         }
 
